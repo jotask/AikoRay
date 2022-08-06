@@ -5,6 +5,8 @@ project (workspaceName)
   	kind "ConsoleApp"
     location "../_build"
     targetdir "../_bin/%{cfg.buildcfg}"
+	language "C++"
+	cppdialect "C++17"
 	
     filter "configurations:Release"
 		kind "WindowedApp"
@@ -20,7 +22,10 @@ project (workspaceName)
 
     files {"**.c", "**.cpp", "**.h", "**.hpp"}
 
-    includedirs { "src"}
+    includedirs {
+		"src",
+		"../submodules/spdlog/include"
+	}
 	link_raylib();
 	
 	-- To link to a lib use link_to("LIB_FOLDER_NAME")

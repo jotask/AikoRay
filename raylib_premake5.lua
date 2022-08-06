@@ -74,11 +74,13 @@ end
 
 project "raylib"
     kind "StaticLib"
+	language "C++"
+	cppdialect "C++17"
 
     platform_defines()
 
     location "_build"
-    language "C"
+    
     targetdir "_bin/%{cfg.buildcfg}"
 
     filter "action:vs*"

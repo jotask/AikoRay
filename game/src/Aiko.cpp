@@ -1,12 +1,12 @@
 #include "Aiko.hpp"
 
-#include "modules/display_module.hpp"
-#include "modules/audio_module.hpp"
-#include "modules/renderer_module.hpp"
-#include "modules/font_module.hpp"
-#include "modules/input_module.hpp"
+#include "modules/display/display_module.hpp"
+#include "modules/audio/audio_module.hpp"
+#include "modules/renderer/renderer_module.hpp"
+#include "modules/assets/font_module.hpp"
+#include "modules/input/input_module.hpp"
 
-#include "systems/game_state_system.hpp"
+#include "systems/game_state_system/game_state_system.hpp"
 
 #include <algorithm>
 
