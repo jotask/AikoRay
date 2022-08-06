@@ -1,6 +1,6 @@
 #pragma once
 
-#include "modules/log/logger_module.h"
+#include "modules/log/logger_module.hpp"
 
 // Core log macros
 #define AIKO_CORE_TRACE(...)    ::aiko::LoggerModule::GetCoreLogger()->trace(__VA_ARGS__)
