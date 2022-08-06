@@ -106,3 +106,5 @@ link_to("LIB_FOLDER_NAME")
 
 Rerun premake and it will build your library for you.
 Note that by default link_to will add include dirs for your library folder and library/include. If you have other include needs you will have to add those to your premake file manually.
+=======
+# AikoRay
