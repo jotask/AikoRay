@@ -17,15 +17,10 @@ project (workspaceName)
 			kind "WindowedApp"
 			entrypoint "mainCRTStartup"
 	filter {}
-	
-    vpaths 
-    {
-        ["Header Files/*"] = { "src/**.h", "**.h"},
-        ["Source Files/*"] = {"src/**.c", "src/**.cpp","**.c", "**.cpp"},
-    }
-    files {"**.c", "**.cpp", "**.h"}
 
-    includedirs { "./", "src"}
+    files {"**.c", "**.cpp", "**.h", "**.hpp"}
+
+    includedirs { "src"}
 	link_raylib();
 	
 	-- To link to a lib use link_to("LIB_FOLDER_NAME")
