@@ -2,7 +2,7 @@
 *
 *   raylib - Advance Game template
 *
-*   Gameplay Screen Functions Definitions (Init, Update, Draw, Unload)
+*   Options Screen Functions Definitions (Init, Update, Draw, Unload)
 *
 *   Copyright (c) 2014-2022 Ramon Santamaria (@raysan5)
 *
@@ -24,7 +24,7 @@
 **********************************************************************************************/
 
 #include "raylib.h"
-#include "screens.h"
+#include "screens.hpp"
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -33,47 +33,37 @@ static int framesCounter = 0;
 static int finishScreen = 0;
 
 //----------------------------------------------------------------------------------
-// Gameplay Screen Functions Definition
+// Options Screen Functions Definition
 //----------------------------------------------------------------------------------
 
-// Gameplay Screen Initialization logic
-void InitGameplayScreen(void)
+// Options Screen Initialization logic
+void InitOptionsScreen(void)
 {
-    // TODO: Initialize GAMEPLAY screen variables here!
+    // TODO: Initialize OPTIONS screen variables here!
     framesCounter = 0;
     finishScreen = 0;
 }
 
-// Gameplay Screen Update logic
-void UpdateGameplayScreen(void)
+// Options Screen Update logic
+void UpdateOptionsScreen(void)
 {
-    // TODO: Update GAMEPLAY screen variables here!
-
-    // Press enter or tap to change to ENDING screen
-    if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
-    {
-        finishScreen = 1;
-        PlaySound(fxCoin);
-    }
+    // TODO: Update OPTIONS screen variables here!
 }
 
-// Gameplay Screen Draw logic
-void DrawGameplayScreen(void)
+// Options Screen Draw logic
+void DrawOptionsScreen(void)
 {
-    // TODO: Draw GAMEPLAY screen here!
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), PURPLE);
-    DrawTextEx(font, "GAMEPLAY SCREEN", (Vector2){ 20, 10 }, font.baseSize*3.0f, 4, MAROON);
-    DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, MAROON);
+    // TODO: Draw OPTIONS screen here!
 }
 
-// Gameplay Screen Unload logic
-void UnloadGameplayScreen(void)
+// Options Screen Unload logic
+void UnloadOptionsScreen(void)
 {
-    // TODO: Unload GAMEPLAY screen variables here!
+    // TODO: Unload OPTIONS screen variables here!
 }
 
-// Gameplay Screen should finish?
-int FinishGameplayScreen(void)
+// Options Screen should finish?
+int FinishOptionsScreen(void)
 {
     return finishScreen;
 }
