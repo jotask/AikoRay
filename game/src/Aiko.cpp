@@ -4,6 +4,7 @@
 #include "modules/audio_module.hpp"
 #include "modules/renderer_module.hpp"
 #include "modules/font_module.hpp"
+#include "modules/input_module.hpp"
 
 #include "systems/game_state_system.hpp"
 
@@ -18,9 +19,10 @@ namespace aiko
         // Modules
 
         m_modules.emplace_back(new DisplayModule());
+        m_modules.emplace_back(new InputModule());
         m_modules.emplace_back(new RendererModule());
         m_modules.emplace_back(new AudioModule());
-        // m_modules.emplace_back(new FontModule());
+        m_modules.emplace_back(new FontModule());
 
         // Connect all system before we initialize them
         auto moduleConnector = ModuleConnector(m_modules);
