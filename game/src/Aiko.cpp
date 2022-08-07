@@ -60,6 +60,7 @@ namespace aiko
 
     void Aiko::onWindowClosedEventHandler(Event& evnt)
     {
+        const auto& windowClose = static_cast <WindowCloseEvent&> (evnt);
         m_isRunning = false;
     }
 
