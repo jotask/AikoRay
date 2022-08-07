@@ -16,6 +16,7 @@ namespace aiko
 
     void AssetModule::init()
     {
+
         this->load<FontAsset>("resources/mecha.png");
 
         std::for_each(m_assets.begin(), m_assets.end(), [](Asset* ass) { ass->load(); });

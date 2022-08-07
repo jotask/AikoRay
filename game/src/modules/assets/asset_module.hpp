@@ -58,14 +58,15 @@ namespace aiko
             return nullptr;
         }
 
-        // TODO
-        // if ( (ass is T*) == false)
-        // {
-        //     std::exception("Asset found is not of type requested");
-        //     return nullptr;
-        // }
-
-        return (T*) ass;
+        if (T* tmp = dynamic_cast<T*>(ass))
+        {
+            return tmp;
+        }
+        else
+        {
+            std::exception("Asset found is not of type requested");
+            return nullptr;
+        }
 
     }
 
