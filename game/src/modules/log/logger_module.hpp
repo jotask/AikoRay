@@ -6,7 +6,7 @@
 #pragma warning(pop)
 
 #include "modules/module.hpp"
-#include "utils/aiko_types.hpp"
+#include "core/aiko_types.hpp"
 
 namespace aiko
 {

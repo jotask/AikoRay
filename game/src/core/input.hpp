@@ -2,7 +2,7 @@
 
 #include <raylib.h>
 
-#include "utils/singleton.hpp"
+#include "core/singleton.hpp"
 
 namespace aiko
 {

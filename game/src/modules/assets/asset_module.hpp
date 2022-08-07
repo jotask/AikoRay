@@ -5,7 +5,7 @@
 #include "modules/assets/asset.hpp"
 
 #include <map>
-#include <utils/uuid.h>
+#include <core/uuid.h>
 
 namespace aiko
 {

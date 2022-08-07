@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "utils/uuid.h"
+#include "core/uuid.h"
 
 namespace aiko
 {

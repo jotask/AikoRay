@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "utils/platform_detection.hpp"
+#include "core/platform_detection.hpp"
 
 #ifdef AIKO_DEBUG
 	#if defined(AIKO_PLATFORM_WINDOWS)

@@ -2,8 +2,8 @@
 
 #include <filesystem>
 
-#include "utils/base.hpp"
-#include "utils/log.h"
+#include "core/base.hpp"
+#include "core/log.h"
 
 #ifdef AIKO_ENABLE_ASSERTS
 

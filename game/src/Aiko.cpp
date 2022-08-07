@@ -7,6 +7,7 @@
 #include "modules/input/input_module.hpp"
 
 #include "systems/game_state_system/game_state_system.hpp"
+#include "systems/scene_system/scene_system.hpp"
 
 #include <algorithm>
 
@@ -32,6 +33,7 @@ namespace aiko
 
         // Systems
 
+        m_systems.emplace_back(new SceneSystem());
         m_systems.emplace_back(new GameStateSystem());
 
         auto systemConnector = SystemConnector(m_systems);
