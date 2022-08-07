@@ -3,6 +3,14 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
+namespace raylib
+{
+    #include <raylib.h>
+}
+
+#include <stdio.h>
+#include <time.h>
+
 namespace aiko
 {
 
@@ -30,7 +38,7 @@ namespace aiko
         s_ClientLogger->flush_on(spdlog::level::trace);
 
         // TODO
-        /*
+
         auto customLogger = [](int msgType, const char* text, va_list args)
         {
             char timeStr[64] = { 0 };
@@ -42,18 +50,19 @@ namespace aiko
 
             switch (msgType)
             {
-            case LOG_INFO: printf("[INFO] : "); break;
-            case LOG_ERROR: printf("[ERROR]: "); break;
-            case LOG_WARNING: printf("[WARN] : "); break;
-            case LOG_DEBUG: printf("[DEBUG]: "); break;
+            case raylib::LOG_INFO: printf("[INFO] : "); break;
+            case raylib::LOG_ERROR: printf("[ERROR]: "); break;
+            case raylib::LOG_WARNING: printf("[WARN] : "); break;
+            case raylib::LOG_DEBUG: printf("[DEBUG]: "); break;
             default: break;
             }
 
             vprintf(text, args);
             printf("\n");
         };
-        SetTraceLogCallback(customLogger);
-        */
+
+        raylib::SetTraceLogCallback(customLogger);
+
 
     }
 
