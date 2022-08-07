@@ -10,6 +10,7 @@
 
 #include "systems/game_state_system/game_state_system.hpp"
 #include "systems/scene_system/scene_system.hpp"
+#include "systems/render_system/render_system.hpp"
 
 #include <algorithm>
 
@@ -41,6 +42,7 @@ namespace aiko
 
         // Systems
 
+        m_systems.emplace_back(CreateScope<RenderSystem>());
         m_systems.emplace_back(CreateScope<SceneSystem>());
         m_systems.emplace_back(CreateScope<GameStateSystem>());
 

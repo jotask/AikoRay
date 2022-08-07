@@ -2,6 +2,8 @@
 
 #include "core/application_types.h"
 
+#include <cassert>
+
 namespace aiko
 {
 
@@ -26,6 +28,7 @@ namespace aiko
                     return tmp;
                 }
             }
+            assert(false);
             return nullptr;
         }
 

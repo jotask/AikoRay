@@ -3,6 +3,8 @@
 #include "systems/scene_system/scene.hpp"
 #include "systems/render_system/render_system.hpp"
 
+#include "components/camera_component.hpp"
+
 namespace aiko
 {
 
@@ -13,7 +15,6 @@ namespace aiko
 
     bool SceneSystem::connect(ModuleConnector& moduleConnector, SystemConnector& systemConnector)
     {
-        // FIXME
         m_renderer = systemConnector.findSystem<RenderSystem>();
         return true;
     }
@@ -21,6 +22,13 @@ namespace aiko
     void SceneSystem::init()
     {
         m_currentScene = CreateRef<Scene>();
+
+        // Create default camera for scene
+        {
+            auto camera = m_currentScene->createEntity("Default Camera");
+            camera.addComponent<CameraComponent>();
+        }
+
     }
 
     void SceneSystem::update()

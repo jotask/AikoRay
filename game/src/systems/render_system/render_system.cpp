@@ -15,8 +15,7 @@ namespace aiko
 
     bool RenderSystem::connect(ModuleConnector& moduleConnector, SystemConnector& systemConnector)
     {
-        // FIXME
-        // rendererModule = moduleConnector.findModule<RendererModule>();
+        rendererModule = moduleConnector.findModule<RendererModule>();
         return true;
     }
 
