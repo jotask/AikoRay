@@ -14,9 +14,9 @@ namespace aiko
         Input();
         ~Input() = default;
     public:
-        bool IsKeyPressed();
-        bool IsMouseButtonPressed();
-        Vector2 GetMousePosition();
+        bool isKeyPressed(const KeyboardKey key);
+        bool isMouseButtonPressed(const MouseButton button);
+        Vector2 getMousePosition();
 
     };
 }

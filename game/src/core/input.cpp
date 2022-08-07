@@ -8,19 +8,19 @@ namespace aiko
 
     }
 
-    bool Input::IsKeyPressed()
+    bool Input::isKeyPressed(const KeyboardKey key)
     {
-        return true; // IsKeyDown(key);
+        return IsKeyDown(key);
     }
 
-    bool Input::IsMouseButtonPressed()
+    bool Input::isMouseButtonPressed(const MouseButton button)
     {
-        return true; // IsMouseButtonDown(button);
+        return IsMouseButtonDown(button);
     }
 
-    Vector2 Input::GetMousePosition()
+    Vector2 Input::getMousePosition()
     {
-        return {}; // GetMousePosition();
+        return GetMousePosition();
     }
 
 }
