@@ -2,7 +2,10 @@
 
 #include "modules/module.hpp"
 
-#include <raylib.h>
+namespace raylib
+{
+    #include <raylib.h>
+}
 
 namespace aiko
 {
@@ -24,8 +27,8 @@ namespace aiko
 
     private:
 
-        Music music = { 0 };
-        Sound fxCoin = { 0 };
+        raylib::Music music = { 0 };
+        raylib::Sound fxCoin = { 0 };
 
     };
 

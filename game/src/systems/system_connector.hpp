@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "core/application_types.h"
 
 namespace aiko
 {
@@ -11,9 +11,7 @@ namespace aiko
     {
     public:
 
-        using Systems = std::vector<System*>;
-
-        class SystemConnector (Systems& systems)
+        class SystemConnector (SystemCollection& systems)
             : m_systems(systems)
         {
 
@@ -33,7 +31,7 @@ namespace aiko
 
     private:
 
-        Systems& m_systems;
+        SystemCollection& m_systems;
 
     };
 

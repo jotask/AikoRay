@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "core/application_types.h"
 
 namespace aiko
 {
@@ -13,7 +13,7 @@ namespace aiko
     public:
         static Aiko& getInstance() { static Aiko instance; return instance; }
     private:
-        Aiko() = default;
+        Aiko();
         ~Aiko();
         Aiko(Aiko const&) = delete;
         void operator=(Aiko const&) = delete;
@@ -23,8 +23,10 @@ namespace aiko
     private:
         void init();
 
-        std::vector<Module*> m_modules;
-        std::vector<System*> m_systems;
+        ModulesCollection m_modules;
+        SystemCollection m_systems;
+
+        bool m_isRunning;
 
     };
 

@@ -1,5 +1,7 @@
 #include "Aiko.hpp"
 
+#include "core/math.hpp"
+
 #include "modules/display/display_module.hpp"
 #include "modules/audio/audio_module.hpp"
 #include "modules/renderer/renderer_module.hpp"
@@ -14,54 +16,59 @@
 namespace aiko
 {
 
+    Aiko::Aiko()
+        : m_isRunning(true)
+    {
+
+    }
+
     void Aiko::init()
     {
 
         // Modules
 
-        m_modules.emplace_back(new DisplayModule());
-        m_modules.emplace_back(new AssetModule());
-        m_modules.emplace_back(new RendererModule());
-        m_modules.emplace_back(new InputModule());
-        m_modules.emplace_back(new AudioModule());
+        m_modules.emplace_back(CreateScope<DisplayModule>());
+        m_modules.emplace_back(CreateScope<AssetModule>());
+        m_modules.emplace_back(CreateScope<RendererModule>());
+        m_modules.emplace_back(CreateScope<InputModule>());
+        m_modules.emplace_back(CreateScope<AudioModule>());
 
         // Connect all system before we initialize them
         auto moduleConnector = ModuleConnector(m_modules);
         std::for_each(m_modules.begin(), m_modules.end(), [&moduleConnector](auto& m) { if (m->connect(moduleConnector) == false) { /* spdlog::error("Error Connecting system!");*/ std::terminate(); }; });
 
-        std::for_each(m_modules.begin(), m_modules.end(), [](Module* m) { m->init(); });
+        std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->init(); });
 
         // Systems
 
-        m_systems.emplace_back(new SceneSystem());
-        m_systems.emplace_back(new GameStateSystem());
+        m_systems.emplace_back(CreateScope<SceneSystem>());
+        m_systems.emplace_back(CreateScope<GameStateSystem>());
 
         auto systemConnector = SystemConnector(m_systems);
         std::for_each(m_systems.begin(), m_systems.end(), [&moduleConnector, &systemConnector](auto& s) { if (s->connect(moduleConnector, systemConnector) == false) { /* spdlog::error("Error Connecting system!");*/ std::terminate(); }; });
 
-        std::for_each(m_systems.begin(), m_systems.end(), [](System* s) { s->init(); });
+        std::for_each(m_systems.begin(), m_systems.end(), [](auto& s) { s->init(); });
 
     }
 
     Aiko::~Aiko()
     {
-        std::for_each(m_modules.begin(), m_modules.end(), [](Module* m) { delete m; });
-        std::for_each(m_systems.begin(), m_systems.end(), [](System* s) { delete s; });
+
     }
 
     void Aiko::run()
     {
         init();
-        while ( WindowShouldClose() == false )    // Detect window close button or ESC key
+        while (m_isRunning == true )
         {
 
-            std::for_each(m_modules.begin(), m_modules.end(), [](Module* m) { m->update(); });
-            std::for_each(m_systems.begin(), m_systems.end(), [](System* s) { s->update(); });
+            std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->update(); });
+            std::for_each(m_systems.begin(), m_systems.end(), [](auto& s) { s->update(); });
 
-            std::for_each(m_modules.begin(), m_modules.end(), [](Module* m) { m->beginFrame(); });
-            std::for_each(m_modules.begin(), m_modules.end(), [](Module* m) { m->render(); });
-            std::for_each(m_systems.begin(), m_systems.end(), [](System* s) { s->render(); });
-            std::for_each(m_modules.begin(), m_modules.end(), [](Module* m) { m->endFrame(); });
+            std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->beginFrame(); });
+            std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->render(); });
+            std::for_each(m_systems.begin(), m_systems.end(), [](auto& s) { s->render(); });
+            std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->endFrame(); });
 
         }
     }

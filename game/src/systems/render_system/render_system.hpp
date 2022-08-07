@@ -7,6 +7,10 @@
 namespace aiko
 {
 
+    class Camera;
+    class RendererModule;
+    class TransformComponent;
+
     class RenderSystem: public System
     {
     public:
@@ -21,7 +25,12 @@ namespace aiko
         virtual void update() override;
         virtual void render() override;
 
+        void beginScene(Camera* camera, TransformComponent* tranform);
+        void endScene();
+
     private:
+
+        RendererModule* rendererModule;
 
     };
 

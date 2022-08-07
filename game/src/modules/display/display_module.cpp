@@ -26,6 +26,12 @@ namespace aiko
             auto height = GetScreenHeight();
             EventSystem::it().sendEvent(WindowResizeEvent(width, height));
         }
+
+        if(WindowShouldClose() == true) // Detect window close button or ESC key
+        {
+            EventSystem::it().sendEvent(WindowCloseEvent());
+        }
+
     }
 
     void DisplayModule::render()

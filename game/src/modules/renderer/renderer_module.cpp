@@ -1,6 +1,11 @@
 #include "renderer_module.hpp"
 
-#include <raylib.h>
+#include "modules/renderer/camera.hpp"
+
+namespace raylib
+{
+    #include <raylib.h>
+}
 
 namespace aiko
 {
@@ -11,7 +16,7 @@ namespace aiko
 
     void RendererModule::init()
     {
-        SetTargetFPS(60);
+        raylib::SetTargetFPS(60);
     }
 
     void RendererModule::update()
@@ -26,14 +31,25 @@ namespace aiko
 
     void RendererModule::beginFrame()
     {
-        BeginDrawing();
+        raylib::BeginDrawing();
 
         ClearBackground(RAYWHITE);
     }
 
     void RendererModule::endFrame()
     {
-        EndDrawing();
+        raylib::EndDrawing();
+    }
+
+    void RendererModule::beginScene(Camera* camera, Vector3 position )
+    {
+        auto cam = raylib::Camera{ position, camera->target, camera->up, camera->fovy, static_cast<int>(camera->projection) };
+        raylib::BeginMode3D(cam);
+    }
+
+    void RendererModule::endScene()
+    {
+        raylib::EndMode3D();
     }
 
 }

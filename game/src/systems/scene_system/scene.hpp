@@ -9,7 +9,7 @@
 namespace aiko
 {
 
-    class Renderer2D;
+    class RenderSystem;
 
     class Scene
     {
@@ -23,7 +23,7 @@ namespace aiko
         void DestroyEntity(Entity entity);
 
         void update();
-        void render(Renderer2D* renderer);
+        void render(RenderSystem* renderer);
 
         entt::registry& getEntityRegister() { return m_entityRegister; }
 

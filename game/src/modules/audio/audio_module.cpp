@@ -11,15 +11,15 @@ namespace aiko
         UnloadMusicStream(music);
         UnloadSound(fxCoin);
 
-        CloseAudioDevice();
+        raylib::CloseAudioDevice();
     }
 
     void AudioModule::init()
     {
-        InitAudioDevice();
+        raylib::InitAudioDevice();
 
-        music = LoadMusicStream("resources/ambient.ogg");
-        fxCoin = LoadSound("resources/coin.wav");
+        music = raylib::LoadMusicStream("resources/ambient.ogg");
+        fxCoin = raylib::LoadSound("resources/coin.wav");
         
         SetMusicVolume(music, 1.0f);
         PlayMusicStream(music);

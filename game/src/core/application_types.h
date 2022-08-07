@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "utils/aiko_types.hpp"
+#include "core/aiko_types.hpp"
 
 namespace aiko
 {

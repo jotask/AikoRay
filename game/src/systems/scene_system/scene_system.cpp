@@ -1,6 +1,7 @@
 #include "scene_system.hpp"
 
 #include "systems/scene_system/scene.hpp"
+#include "systems/render_system/render_system.hpp"
 
 namespace aiko
 {
@@ -12,7 +13,8 @@ namespace aiko
 
     bool SceneSystem::connect(ModuleConnector& moduleConnector, SystemConnector& systemConnector)
     {
-        // m_renderer2d = systemConnector.findSystem<Renderer2D>();
+        // FIXME
+        m_renderer = systemConnector.findSystem<RenderSystem>();
         return true;
     }
 
@@ -28,7 +30,7 @@ namespace aiko
 
     void SceneSystem::render()
     {
-        m_currentScene->render(&*(m_renderer2d));
+        m_currentScene->render(&*(m_renderer));
     }
 
     Scene* SceneSystem::getCurrentScene()

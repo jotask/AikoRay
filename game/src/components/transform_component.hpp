@@ -1,11 +1,7 @@
 #pragma once
 
 #include "components/component.hpp"
-
-namespace raylib
-{
-    #include <raylib.h>
-}
+#include "core/math.hpp"
 
 namespace aiko
 {
@@ -13,9 +9,9 @@ namespace aiko
     class TransformComponent : public Component
     {
     public:
-        raylib::Vector3 position = { 0.0f };
-        raylib::Vector3 rotation = { 0.0f };
-        raylib::Vector3 scale = { 1.0f };
+        Vector3 position = { 0.0f };
+        Vector3 rotation = { 0.0f };
+        Vector3 scale = { 1.0f };
 
         TransformComponent() : Component("TransformComponent") { };
         TransformComponent(const TransformComponent&) = default;

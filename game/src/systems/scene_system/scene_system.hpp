@@ -9,7 +9,7 @@ namespace aiko
 {
 
     class Scene;
-    class Renderer2D;
+    class RenderSystem;
 
     class SceneSystem: public System
     {
@@ -29,7 +29,7 @@ namespace aiko
 
     private:
         Ref<Scene> m_currentScene;
-        Renderer2D* m_renderer2d;
+        RenderSystem* m_renderer;
     };
 
 }
