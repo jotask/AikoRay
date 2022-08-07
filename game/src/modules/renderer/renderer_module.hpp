@@ -26,6 +26,10 @@ namespace aiko
         void beginScene(Camera* camera, Vector3 position);
         void endScene();
 
+    private:
+
+        void renderDebug();
+
     };
 
 }

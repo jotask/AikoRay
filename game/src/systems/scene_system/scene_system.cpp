@@ -4,6 +4,7 @@
 #include "systems/render_system/render_system.hpp"
 
 #include "components/camera_component.hpp"
+#include "components/transform_component.hpp"
 
 namespace aiko
 {
@@ -27,6 +28,7 @@ namespace aiko
         {
             auto camera = m_currentScene->createEntity("Default Camera");
             camera.addComponent<CameraComponent>();
+            camera.getComponent<TransformComponent>().position = { 10.0f, 10.0f, 10.0f };
         }
 
     }

@@ -23,6 +23,8 @@ namespace aiko
     void GameStateSystem::update()
     {
 
+        return; // FIXME
+
         if ( onTransition == false )
         {
             m_currentState->update();
@@ -41,6 +43,9 @@ namespace aiko
 
     void GameStateSystem::render()
     {
+
+        return; // FIXME
+
         m_currentState->render();
 
         if (onTransition == true)
