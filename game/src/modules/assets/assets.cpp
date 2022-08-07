@@ -16,7 +16,7 @@ namespace aiko
     bool FontAsset::load()
     {
         m_font = LoadFont(m_path.c_str());
-        // TODO
+        // TODO :: Check if asset has loaded correctly
         return true;
     }
 

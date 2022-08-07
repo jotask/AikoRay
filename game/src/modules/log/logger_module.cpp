@@ -37,8 +37,6 @@ namespace aiko
         s_ClientLogger->set_level(spdlog::level::trace);
         s_ClientLogger->flush_on(spdlog::level::trace);
 
-        // TODO
-
         auto customLogger = [](int msgType, const char* text, va_list args)
         {
             char timeStr[64] = { 0 };
