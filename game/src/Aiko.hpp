@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/application_types.h"
+#include "events/event.hpp"
 
 namespace aiko
 {
@@ -27,6 +28,8 @@ namespace aiko
         SystemCollection m_systems;
 
         bool m_isRunning;
+
+        void onWindowClosedEventHandler(Event&);
 
     };
 

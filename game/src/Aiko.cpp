@@ -12,6 +12,9 @@
 #include "systems/scene_system/scene_system.hpp"
 #include "systems/render_system/render_system.hpp"
 
+#include "events/engine_events.hpp"
+#include "events/event_system.hpp"
+
 #include <algorithm>
 
 namespace aiko
@@ -51,6 +54,13 @@ namespace aiko
 
         std::for_each(m_systems.begin(), m_systems.end(), [](auto& s) { s->init(); });
 
+        EventSystem::it().bind<WindowCloseEvent>(this, &Aiko::onWindowClosedEventHandler);
+
+    }
+
+    void Aiko::onWindowClosedEventHandler(Event& evnt)
+    {
+        m_isRunning = false;
     }
 
     Aiko::~Aiko()
