@@ -2,7 +2,7 @@
 // Platform detection using predefined macros
 #ifdef _WIN32
 		/* Windows x64/x86 */
-	#if defined _WIN32 || defined _WIN64
+	#if defined _WIN32 /* || defined _WIN64 */
 		/* Windows x64  */
 	#define AIKO_PLATFORM_WINDOWS
 	#else
