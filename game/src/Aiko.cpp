@@ -3,7 +3,7 @@
 #include "modules/display/display_module.hpp"
 #include "modules/audio/audio_module.hpp"
 #include "modules/renderer/renderer_module.hpp"
-#include "modules/assets/font_module.hpp"
+#include "modules/assets/asset_module.hpp"
 #include "modules/input/input_module.hpp"
 
 #include "systems/game_state_system/game_state_system.hpp"
@@ -19,10 +19,10 @@ namespace aiko
         // Modules
 
         m_modules.emplace_back(new DisplayModule());
-        m_modules.emplace_back(new InputModule());
+        m_modules.emplace_back(new AssetModule());
         m_modules.emplace_back(new RendererModule());
+        m_modules.emplace_back(new InputModule());
         m_modules.emplace_back(new AudioModule());
-        m_modules.emplace_back(new FontModule());
 
         // Connect all system before we initialize them
         auto moduleConnector = ModuleConnector(m_modules);

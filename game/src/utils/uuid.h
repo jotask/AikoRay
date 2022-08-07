@@ -12,6 +12,7 @@ namespace aiko
         UUID();
         UUID(uint64_t uuid);
         UUID(const UUID&) = default;
+        bool operator == (const UUID& other) { return m_UUID == other.m_UUID; }
         operator uint64_t() const { return m_UUID; }
         operator std::string() const { return std::to_string(m_UUID); }
     private:
