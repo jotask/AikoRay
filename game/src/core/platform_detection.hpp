@@ -1,10 +1,8 @@
 
-#if TODO
-
 // Platform detection using predefined macros
 #ifdef _WIN32
 		/* Windows x64/x86 */
-	#ifdef _WIN64
+	#if defined _WIN32 || defined _WIN64
 		/* Windows x64  */
 	#define AIKO_PLATFORM_WINDOWS
 	#else
@@ -41,5 +39,3 @@
 	/* Unknown compiler/platform */
 #error "Unknown platform!"
 #endif // End of platform detection
-
-#endif
