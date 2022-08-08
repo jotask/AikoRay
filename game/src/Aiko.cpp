@@ -43,9 +43,6 @@ namespace aiko
 
         std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->init(); });
 
-        // TODO : Fix this this is used now to force load all assets on start. Ideally the scene should be the responsible to load everything needed?
-        std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->postInit(); });
-
         // Systems
 
         m_systems.emplace_back(CreateScope<RenderSystem>());

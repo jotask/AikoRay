@@ -16,14 +16,13 @@ namespace aiko
 
     void AssetModule::init()
     {
-        this->load<FontAsset>("resources/mecha.png");
-        this->load<MusicAsset>("resources/ambient.ogg");
-        this->load<SoundAsset>("resources/coin.wav");
+        // TODO remove/move this
+        // this->load<FontAsset>("resources/mecha.png");
     }
 
     void AssetModule::postInit()
     {
-        std::for_each(m_assets.begin(), m_assets.end(), [](Asset* ass) { ass->load(); });
+        
     }
 
     void AssetModule::update()
@@ -56,19 +55,7 @@ namespace aiko
             }
         }
         std::exception("Asset not found");
-        return nullptr;
-    }
-
-    Asset* AssetModule::getAssetInternal(const std::string& path)
-    {
-        for (auto* ass : m_assets)
-        {
-            if (ass->getPath() == path)
-            {
-                return ass;
-            }
-        }
-        std::exception("Asset not found");
+        assert(false);
         return nullptr;
     }
 
