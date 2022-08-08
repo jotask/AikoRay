@@ -1,7 +1,5 @@
 #pragma once
 
-#if TODO_JOSE
-
 #include "utils/utilities.hpp"
 
 #include <json/json.h>
@@ -36,5 +34,3 @@ namespace aiko
 
     }
 }
-
-#endif

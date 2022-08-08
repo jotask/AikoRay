@@ -25,7 +25,8 @@ project (workspaceName)
     includedirs {
 		"src",
 		"%{wks.location}/submodules/spdlog/include",
-		"%{wks.location}/submodules/entt/single_include/entt"
+		"%{wks.location}/submodules/entt/single_include/entt",
+		"%{wks.location}/submodules/jsoncpp/include"
 	}
 	link_raylib();
 	

@@ -1,9 +1,5 @@
 #pragma once
 
-#if TODO_JOSE
-
-#include "SOIL2.h"
-
 #include <string>
 #include <fstream>
 #include <filesystem>
@@ -23,12 +19,6 @@ namespace aiko
         {
             // TODO : Not happy with this, find other solution
             return std::filesystem::current_path() / ("../assets/" + file);
-        }
-
-        static unsigned int loadBMPTexture(const std::string& fileName)
-        {
-            const auto fullPathToFile = getFullPathToFile(fileName);
-            return SOIL_load_OGL_texture(fullPathToFile.string().c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
         }
 
         static std::string readFile(const std::string& fileName)
@@ -56,5 +46,3 @@ namespace aiko
     }
 
 }
-
-#endif
