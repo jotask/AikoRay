@@ -4,3 +4,4 @@ _bin
 .vs
 
 *.sln
+*.log
