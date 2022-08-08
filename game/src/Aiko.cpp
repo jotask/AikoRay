@@ -2,6 +2,7 @@
 
 #include "core/math.hpp"
 
+#include "modules/log/logger_module.hpp"
 #include "modules/display/display_module.hpp"
 #include "modules/audio/audio_module.hpp"
 #include "modules/renderer/renderer_module.hpp"
@@ -31,6 +32,7 @@ namespace aiko
 
         // Modules
 
+        m_modules.emplace_back(CreateScope<LoggerModule>());
         m_modules.emplace_back(CreateScope<AssetModule>());
         m_modules.emplace_back(CreateScope<DisplayModule>());
         m_modules.emplace_back(CreateScope<RendererModule>());
