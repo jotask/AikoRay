@@ -4,3 +4,6 @@
 [submodule "submodules/entt"]
 	path = submodules/entt
 	url = https://github.com/skypjack/entt.git
+[submodule "submodules/jsoncpp"]
+	path = submodules/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp.git
