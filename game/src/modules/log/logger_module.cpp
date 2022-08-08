@@ -55,6 +55,18 @@ namespace aiko
             default: break;
             }
 
+            // TODO
+            /*
+            switch (msgType)
+            {
+                case raylib::LOG_INFO: s_CoreLogger->info(text); break;
+                case raylib::LOG_ERROR: s_CoreLogger->error(text); break;
+                case raylib::LOG_WARNING: s_CoreLogger->warn(text); break;
+                case raylib::LOG_DEBUG: s_CoreLogger->debug(text); break;
+                default: break;
+            }
+            */
+
             vprintf(text, args);
             printf("\n");
         };
