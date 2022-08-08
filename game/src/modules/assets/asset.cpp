@@ -20,4 +20,9 @@ namespace aiko
         return m_uuid;
     }
 
+    const std::string& Asset::getPath()
+    {
+        return m_path;
+    }
+
 }

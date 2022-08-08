@@ -31,8 +31,8 @@ namespace aiko
 
         // Modules
 
-        m_modules.emplace_back(CreateScope<DisplayModule>());
         m_modules.emplace_back(CreateScope<AssetModule>());
+        m_modules.emplace_back(CreateScope<DisplayModule>());
         m_modules.emplace_back(CreateScope<RendererModule>());
         m_modules.emplace_back(CreateScope<InputModule>());
         m_modules.emplace_back(CreateScope<AudioModule>());
@@ -42,6 +42,9 @@ namespace aiko
         std::for_each(m_modules.begin(), m_modules.end(), [&moduleConnector](auto& m) { if (m->connect(moduleConnector) == false) { /* spdlog::error("Error Connecting system!");*/ std::terminate(); }; });
 
         std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->init(); });
+
+        // TODO : Fix this this is used now to force load all assets on start. Ideally the scene should be the responsible to load everything needed?
+        std::for_each(m_modules.begin(), m_modules.end(), [](auto& m) { m->postInit(); });
 
         // Systems
 

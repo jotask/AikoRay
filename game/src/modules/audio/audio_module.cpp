@@ -1,34 +1,41 @@
 #include "audio_module.hpp"
 
-#include <raylib.h>
+#include "modules/assets/asset_module.hpp"
+
+namespace raylib
+{
+    #include <raylib.h>
+}
 
 namespace aiko
 {
 
     AudioModule::~AudioModule()
     {
-       // Unload global data loaded
-        UnloadMusicStream(music);
-        UnloadSound(fxCoin);
-
         raylib::CloseAudioDevice();
+    }
+
+    bool AudioModule::connect(ModuleConnector& moduleConnector)
+    {
+        assetModule = moduleConnector.findModule<AssetModule>();
+        return true;
     }
 
     void AudioModule::init()
     {
         raylib::InitAudioDevice();
 
-        music = raylib::LoadMusicStream("resources/ambient.ogg");
-        fxCoin = raylib::LoadSound("resources/coin.wav");
+        music = assetModule->getAsset<MusicAsset>("resources/ambient.ogg");
+        sound = assetModule->getAsset<SoundAsset>("resources/coin.wav");
         
-        SetMusicVolume(music, 1.0f);
-        PlayMusicStream(music);
+        music->setMusicvolumen(1.0f);
+        music->play();
 
     }
 
     void AudioModule::update()
     {
-        UpdateMusicStream(music);
+
     }
 
     void AudioModule::render()

@@ -144,7 +144,10 @@ namespace aiko
         };
         static int currentModelIndex = models.size() - 1;
 
-        for (int i = 0; i < models.size(); i++) models[i].materials[0].maps[raylib::MATERIAL_MAP_DIFFUSE].texture = textures[currentTextureIndex];
+        for (size_t i = 0; i < models.size(); i++)
+        {
+            models[i].materials[0].maps[raylib::MATERIAL_MAP_DIFFUSE].texture = textures[currentTextureIndex];
+        }
 
         if (raylib::IsMouseButtonPressed(raylib::MOUSE_BUTTON_LEFT))
         {

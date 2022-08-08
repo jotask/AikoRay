@@ -18,6 +18,7 @@ namespace aiko
         virtual ~AssetModule();
 
         virtual void init() override;
+        virtual void postInit();
 
         virtual void update() override;
         virtual void render() override;
@@ -30,12 +31,16 @@ namespace aiko
 
         template<class T>
         T* getAsset(const UUID& uuid);
+
+        template<class T>
+        T* getAsset(const std::string& path);
             
     private:
 
         std::vector<Asset*> m_assets;
 
         Asset* getAssetInternal(const UUID& uuid);
+        Asset* getAssetInternal(const std::string& path);
 
     };
 
@@ -68,6 +73,28 @@ namespace aiko
             return nullptr;
         }
 
+    }
+
+    template<class T>
+    inline T* AssetModule::getAsset(const std::string& path)
+    {
+        static_assert(std::is_base_of<Asset, T>::value, "Derived not derived from Asset");
+        auto* ass = getAssetInternal(path);
+        if (ass == nullptr)
+        {
+            std::exception("Asset not found");
+            return nullptr;
+        }
+
+        if (T* tmp = dynamic_cast<T*>(ass))
+        {
+            return tmp;
+        }
+        else
+        {
+            std::exception("Asset found is not of type requested");
+            return nullptr;
+        }
     }
 
 }

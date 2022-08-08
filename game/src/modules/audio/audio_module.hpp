@@ -2,13 +2,12 @@
 
 #include "modules/module.hpp"
 
-namespace raylib
-{
-    #include <raylib.h>
-}
+#include "modules/assets/assets.hpp"
 
 namespace aiko
 {
+
+    class AssetModule;
 
     class AudioModule : public Module
     {
@@ -16,6 +15,8 @@ namespace aiko
 
         AudioModule() = default;
         virtual ~AudioModule();
+
+        virtual bool connect(ModuleConnector& moduleConnector) override;
 
         virtual void init() override;
 
@@ -27,8 +28,10 @@ namespace aiko
 
     private:
 
-        raylib::Music music = { 0 };
-        raylib::Sound fxCoin = { 0 };
+        AssetModule* assetModule;
+
+        MusicAsset* music;
+        SoundAsset* sound;
 
     };
 

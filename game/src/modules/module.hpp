@@ -14,6 +14,7 @@ namespace aiko
         virtual ~Module() = default;
 
         virtual void init() = 0;
+        virtual void postInit() { };
 
         virtual bool connect(ModuleConnector& moduleConnector) { return true; };
 
