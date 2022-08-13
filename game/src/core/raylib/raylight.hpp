@@ -32,10 +32,6 @@
 
 #pragma once
 
-#define RAYLIGHT_ENABLED
-
-#ifndef RAYLIGHT_ENABLED
-
 #include "utils/raylib_include.hpp"
 #include "core/math.hpp"
 
@@ -78,5 +74,3 @@ namespace aiko
     }
 
 }
-
-#endif

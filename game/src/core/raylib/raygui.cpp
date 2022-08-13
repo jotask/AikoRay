@@ -2,6 +2,9 @@
 
 #ifndef RAYGUI_DISABLED
 
+#include <array>
+#include <string>
+
 namespace aiko
 {
 
@@ -312,7 +315,7 @@ namespace aiko
 
             float horizontalMin = hasHorizontalScrollBar? ((GuiGetStyle(GuiControl::LISTVIEW, SCROLLBAR_SIDE) == SCROLLBAR_LEFT_SIDE)? (float)-verticalScrollBarWidth : 0) - (float)GuiGetStyle(GuiControl::DEFAULT, GuiControlProperty::BORDER_WIDTH) : (((float)GuiGetStyle(GuiControl::LISTVIEW, SCROLLBAR_SIDE) == SCROLLBAR_LEFT_SIDE)? (float)-verticalScrollBarWidth : 0) - (float)GuiGetStyle(GuiControl::DEFAULT, GuiControlProperty::BORDER_WIDTH);
             float horizontalMax = hasHorizontalScrollBar? content.width - bounds.width + (float)verticalScrollBarWidth + GuiGetStyle(GuiControl::DEFAULT, GuiControlProperty::BORDER_WIDTH) - (((float)GuiGetStyle(GuiControl::LISTVIEW, SCROLLBAR_SIDE) == SCROLLBAR_LEFT_SIDE)? (float)verticalScrollBarWidth : 0) : (float)-GuiGetStyle(GuiControl::DEFAULT, GuiControlProperty::BORDER_WIDTH);
-            float verticalMin = hasVerticalScrollBar? 0 : -1;
+            float verticalMin = hasVerticalScrollBar? 0.0f : -1.0f;
             float verticalMax = hasVerticalScrollBar? content.height - bounds.height + (float)horizontalScrollBarWidth + (float)GuiGetStyle(GuiControl::DEFAULT, GuiControlProperty::BORDER_WIDTH) : (float)-GuiGetStyle(GuiControl::DEFAULT, GuiControlProperty::BORDER_WIDTH);
 
             // Update control
@@ -2057,7 +2060,7 @@ namespace aiko
         // in that case, custom font image atlas is GRAY+ALPHA and pixel data can be compressed (DEFLATE)
         void RayGui::GuiLoadStyle(const char *fileName)
         {
-            /*
+
             #define MAX_LINE_BUFFER_SIZE    256
 
             bool tryBinary = false;
@@ -2199,7 +2202,7 @@ namespace aiko
                         fread(&fontType, 1, sizeof(int), rgsFile);
 
                         // Load font white raylib::Rectangle
-                        fread(&whiteRec, 1, sizeof(raylib::Rectangle, rgsFile);
+                        fread(&whiteRec, 1, sizeof(raylib::Rectangle), rgsFile);
 
                         // Load font image parameters
                         int fontImageUncompSize = 0;
@@ -2222,7 +2225,7 @@ namespace aiko
                             imFont.data = raylib::DecompressData(compData, fontImageCompSize, &dataUncompSize);
 
                             // Security check, dataUncompSize must match the provided fontImageUncompSize
-                            if (dataUncompSize != fontImageUncompSize) RAYGUI_LOG("WARNING: Uncompressed font atlas image data could be corrupted");
+                            if (dataUncompSize != fontImageUncompSize) printf("WARNING: Uncompressed font atlas image data could be corrupted");
 
                             free(compData);
                         }
@@ -2240,8 +2243,8 @@ namespace aiko
                         free(imFont.data);
 
                         // Load font recs data
-                        font.recs = (raylib::Rectangle *)calloc(font.glyphCount, sizeof(raylib::Rectangle);
-                        for (int i = 0; i < font.glyphCount; i++) fread(&font.recs[i], 1, sizeof(raylib::Rectangle, rgsFile);
+                        font.recs = (raylib::Rectangle *)calloc(font.glyphCount, sizeof(raylib::Rectangle));
+                        for (int i = 0; i < font.glyphCount; i++) fread(&font.recs[i], 1, sizeof(raylib::Rectangle), rgsFile);
 
                         // Load font chars info data
                         font.glyphs = (raylib::GlyphInfo *)calloc(font.glyphCount, sizeof(raylib::GlyphInfo));
@@ -2264,8 +2267,6 @@ namespace aiko
 
                 fclose(rgsFile);
             }
-
-            */
 
         }
 

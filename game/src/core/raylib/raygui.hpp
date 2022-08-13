@@ -195,12 +195,7 @@
 
 #pragma once
 
-#define RAYGUI_DISABLED
-
-#ifndef RAYGUI_DISABLED
-
 #include "utils/raylib_include.hpp"
-
 #include "core/singleton.hpp"
 
 namespace aiko
@@ -512,5 +507,3 @@ namespace aiko
     }
 
 }
-
-#endif // ! 

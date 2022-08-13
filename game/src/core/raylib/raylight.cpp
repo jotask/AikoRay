@@ -1,7 +1,5 @@
 #include "core/raylib/raylight.hpp"
 
-#ifndef RAYLIGHT_ENABLED
-
 namespace aiko
 {
 
@@ -59,5 +57,3 @@ namespace aiko
     }
 
 }
-
-#endif
