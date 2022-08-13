@@ -1,7 +1,6 @@
 #include "game_state.hpp"
 
-#include <raylib.h>
-
+#include "utils/raylib_include.hpp"
 #include "systems/game_state_system/states/options_state.hpp"
 
 namespace aiko
@@ -20,7 +19,7 @@ namespace aiko
 
     void GameState::update()
     {
-        if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+        if (raylib::IsKeyPressed(raylib::KEY_ENTER) || raylib::IsGestureDetected(raylib::GESTURE_TAP))
         {
             finishScreen = true;
             // PlaySound(fxCoin);
@@ -29,9 +28,9 @@ namespace aiko
 
     void GameState::render()
     {
-        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), PURPLE);
+        raylib::DrawRectangle(0, 0, raylib::GetScreenWidth(), raylib::GetScreenHeight(), raylib::PURPLE);
         // DrawTextEx(font, "GAMEPLAY SCREEN", { 20, 10 }, font.baseSize * 3.0f, 4, MAROON);
-        DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, MAROON);
+        raylib::DrawText("PRESS ENTER or TAP to JUMP to ENDING SCREEN", 130, 220, 20, raylib::MAROON);
     }
 
     State* GameState::getNextState()

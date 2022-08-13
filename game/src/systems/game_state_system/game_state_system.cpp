@@ -1,10 +1,8 @@
 #include "game_state_system.hpp"
 
+#include "utils/raylib_include.hpp"
 #include "states/state.hpp"
-
 #include "states/logo_state.hpp"
-
-#include <raylib.h>
 
 namespace aiko
 {
@@ -16,7 +14,7 @@ namespace aiko
 
     void GameStateSystem::init()
     {
-        SetTargetFPS(60);
+        raylib::SetTargetFPS(60);
         m_currentState = new LogoState();
     }
 
@@ -114,7 +112,7 @@ namespace aiko
 
     void GameStateSystem::drawTransition(void)
     {
-        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, transAlpha));
+        raylib::DrawRectangle(0, 0, raylib::GetScreenWidth(), raylib::GetScreenHeight(), Fade(raylib::BLACK, transAlpha));
     }
 
 }

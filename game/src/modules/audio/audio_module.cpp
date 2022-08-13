@@ -1,11 +1,7 @@
 #include "audio_module.hpp"
 
 #include "modules/assets/asset_module.hpp"
-
-namespace raylib
-{
-    #include <raylib.h>
-}
+#include "utils/raylib_include.hpp"
 
 namespace aiko
 {

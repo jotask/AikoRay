@@ -1,8 +1,7 @@
 #pragma once
 
+#include "utils/raylib_include.hpp"
 #include "modules/module.hpp"
-
-#include <raylib.h>
 
 namespace aiko
 {

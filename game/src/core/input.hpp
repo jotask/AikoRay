@@ -1,7 +1,7 @@
 #pragma once
 
-#include <raylib.h>
-
+#include "utils/raylib_include.hpp"
+#include "core/math.hpp"
 #include "core/singleton.hpp"
 
 namespace aiko
@@ -14,8 +14,8 @@ namespace aiko
         Input();
         ~Input() = default;
     public:
-        bool isKeyPressed(const KeyboardKey key);
-        bool isMouseButtonPressed(const MouseButton button);
+        bool isKeyPressed(const raylib::KeyboardKey key);
+        bool isMouseButtonPressed(const raylib::MouseButton button);
         Vector2 getMousePosition();
 
     };

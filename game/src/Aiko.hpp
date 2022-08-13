@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils/raylib_include.hpp"
+
 #include "core/application_types.h"
 #include "events/event.hpp"
 

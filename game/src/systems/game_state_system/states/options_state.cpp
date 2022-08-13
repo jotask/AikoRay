@@ -1,7 +1,6 @@
 #include "options_state.hpp"
 
-#include <raylib.h>
-
+#include "utils/raylib_include.hpp"
 #include "systems/game_state_system/states/ending_state.hpp"
 
 namespace aiko
@@ -20,7 +19,7 @@ namespace aiko
 
     void OptionsState::update()
     {
-        if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+        if (raylib::IsKeyPressed(raylib::KEY_ENTER) || raylib::IsGestureDetected(raylib::GESTURE_TAP))
         {
             finishScreen = true;
             // PlaySound(fxCoin);

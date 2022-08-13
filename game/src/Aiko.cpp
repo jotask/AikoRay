@@ -18,6 +18,9 @@
 
 #include <algorithm>
 
+#include "core/raylib/raygui.hpp"
+#include "core/raylib/raylight.hpp"
+
 namespace aiko
 {
 

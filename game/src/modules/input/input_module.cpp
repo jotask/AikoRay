@@ -1,6 +1,6 @@
 #include "input_module.hpp"
 
-#include <raylib.h>
+#include "utils/raylib_include.hpp"
 
 namespace aiko
 {

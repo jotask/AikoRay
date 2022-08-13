@@ -1,12 +1,9 @@
 #include "logger_module.hpp"
 
+#include "utils/raylib_include.hpp"
+
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
-
-namespace raylib
-{
-    #include <raylib.h>
-}
 
 #include <stdio.h>
 #include <time.h>

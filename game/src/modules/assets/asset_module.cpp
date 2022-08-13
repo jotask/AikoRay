@@ -1,8 +1,7 @@
 #include "asset_module.hpp"
 
 #include "modules/assets/assets.hpp"
-
-#include <raylib.h>
+#include "utils/raylib_include.hpp"
 
 #include <algorithm>
 

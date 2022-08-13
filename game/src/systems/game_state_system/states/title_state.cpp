@@ -1,7 +1,6 @@
 #include "title_state.hpp"
 
-#include <raylib.h>
-
+#include "utils/raylib_include.hpp"
 #include "systems/game_state_system/states/game_state.hpp"
 
 namespace aiko
@@ -20,7 +19,7 @@ namespace aiko
 
     void TitleState::update()
     {
-        if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
+        if (raylib::IsKeyPressed(raylib::KEY_ENTER) || raylib::IsGestureDetected(raylib::GESTURE_TAP))
         {
             finishScreen = true;
             // PlaySound(fxCoin);
@@ -29,9 +28,9 @@ namespace aiko
 
     void TitleState::render()
     {
-        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), GREEN);
+        raylib::DrawRectangle(0, 0, raylib::GetScreenWidth(), raylib::GetScreenHeight(), raylib::GREEN);
         // DrawTextEx(font, "TITLE SCREEN", { 20, 10 }, font.baseSize * 3.0f, 4, DARKGREEN);
-        DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, DARKGREEN);
+        raylib::DrawText("PRESS ENTER or TAP to JUMP to GAMEPLAY SCREEN", 120, 220, 20, raylib::DARKGREEN);
     }
 
     State* TitleState::getNextState()

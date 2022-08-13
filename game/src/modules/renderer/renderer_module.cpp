@@ -1,11 +1,7 @@
 #include "renderer_module.hpp"
 
 #include "modules/renderer/camera.hpp"
-
-namespace raylib
-{
-    #include <raylib.h>
-}
+#include "utils/raylib_include.hpp"
 
 #include <vector>
 
