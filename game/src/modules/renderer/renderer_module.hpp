@@ -2,11 +2,17 @@
 
 #include "modules/module.hpp"
 #include "core/math.hpp"
+#include "modules/renderer/light.hpp"
+#include "modules/renderer/shader.hpp"
+
+#include <vector>
 
 namespace aiko
 {
 
     class Camera;
+
+    class AssetModule;
 
     class RendererModule : public Module
     {
@@ -15,6 +21,7 @@ namespace aiko
         RendererModule() = default;
         virtual ~RendererModule();
 
+        virtual bool connect(ModuleConnector& moduleConnector) override;
         virtual void init() override;
 
         virtual void update() override;
@@ -28,7 +35,18 @@ namespace aiko
 
     private:
 
+        using Lights = std::vector<Light>;
+        Lights      m_lights;
+
+        using Shaders = std::vector<Shader>;
+        Shaders     m_shader;
+
+        AssetModule* m_assetModule;
+
+        void sendLightToShader(Shader shader);
+
         void renderDebug();
+        void renderShader();
 
     };
 

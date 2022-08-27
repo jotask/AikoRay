@@ -1,7 +1,14 @@
 #include "renderer_module.hpp"
 
+#include "modules/assets/asset_module.hpp"
 #include "modules/renderer/camera.hpp"
 #include "utils/raylib_include.hpp"
+#include "core/raylib/raylight.hpp"
+
+#include "core/platform_detection.hpp"
+#include "modules/assets/assets.hpp"
+
+#include "modules/renderer/light.hpp"
 
 #include <vector>
 
@@ -12,9 +19,28 @@ namespace aiko
 
     }
 
+    bool RendererModule::connect(ModuleConnector& moduleConnector)
+    {
+        m_assetModule = moduleConnector.findModule<AssetModule>();
+        return true;
+    }
+
     void RendererModule::init()
     {
         raylib::SetTargetFPS(60);
+
+        m_shader.push_back({ raylib::TextFormat("resources/shaders/glsl%i/base_lighting.vs", GLSL_VERSION), raylib::TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION) });
+        for (auto& shader : m_shader)
+        {
+            shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW] = shader.GetLocation("viewPos");
+            shader.SetValue("ambient", { 0.1f, 0.1f, 0.1f, 1.0f }, Shader::ShaderUniformType::SHADER_UNIFORM_VEC4);
+        }
+
+        m_lights.push_back({ Light::LightType::POINT, { -2, 1, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
+        m_lights.push_back({ Light::LightType::POINT, {  2, 1,  2 }, {0.0f}, raylib::RED, 0.5f });
+        m_lights.push_back({ Light::LightType::POINT, { -2, 1,  2 }, {0.0f}, raylib::GREEN, 0.5f });
+        m_lights.push_back({ Light::LightType::POINT, {  2, 1, -2 }, {0.0f}, raylib::BLUE, 0.5f });
+
     }
 
     void RendererModule::update()
@@ -30,7 +56,6 @@ namespace aiko
     void RendererModule::beginFrame()
     {
         raylib::BeginDrawing();
-
         ClearBackground(RAYWHITE);
     }
 
@@ -41,29 +66,120 @@ namespace aiko
 
     void RendererModule::beginScene(Camera* camera, Vector3 position )
     {
-        auto cam = raylib::Camera{ position, camera->target, camera->up, camera->fovy, static_cast<int>(camera->projection) };
+        // auto cam = raylib::Camera{ position, camera->target, camera->up, camera->fovy, static_cast<int>(camera->projection) };
+        auto cam = raylib::Camera{ {2.0f, 4.0f, 6.0f}, { 0.0f, 0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, static_cast<int>(camera->projection) };
 
         static Camera* old = nullptr;
 
         if ( old != camera )
         {
             old = camera;
-            raylib::SetCameraMode(cam, raylib::CAMERA_ORBITAL);  // Set a orbital camera mode   
+            raylib::SetCameraMode(cam, raylib::CAMERA_ORBITAL);  // Set a orbital camera mode
         }
         else
         {
             raylib::UpdateCamera(&cam);
         }
 
+        for (auto& shader : m_shader)
+        {
+            float cameraPos[3] = { cam.position.x, cam.position.y, cam.position.z };
+            raylib::SetShaderValue(shader.m_shader, shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW], cameraPos, raylib::SHADER_UNIFORM_VEC3);
+        }
+
         raylib::BeginMode3D(cam);
 
         renderDebug();
+
+        renderShader();
 
     }
 
     void RendererModule::endScene()
     {
         raylib::EndMode3D();
+    }
+
+    void RendererModule::renderShader()
+    {
+
+        static std::vector<raylib::Model> models = {
+            raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)),
+            raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)),
+        };
+
+        for (auto& shader : m_shader)
+        {
+
+            for (auto& caca : models)
+            {
+                caca.materials[0].shader = shader.m_shader;
+            }
+
+            sendLightToShader(shader);
+        }
+
+        for (auto& caca : models)
+        {
+            raylib::DrawModel(caca, {0.0f}, 1.0f, raylib::WHITE);
+        }
+
+        for (auto& light : m_lights)
+        {
+            if ( light.enabled == true )
+            {
+                raylib::DrawSphereEx(light.position, 0.2f, 8, 8, light.color);
+            }
+            else
+            {
+                raylib::DrawSphereWires(light.position, 0.2f, 8, 8, raylib::ColorAlpha(light.color, 0.3f));
+            }
+        }
+
+
+    }
+
+    void RendererModule::sendLightToShader(Shader shaderTmp)
+    {
+        auto lightsCount = 0;
+
+        auto& shader = shaderTmp.m_shader;
+
+        for( auto& light : m_lights )
+        {
+
+            // NOTE: Lighting shader naming must be the provided ones
+            auto enabledLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].enabled", lightsCount));
+            auto typeLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].type", lightsCount));
+            auto positionLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].position", lightsCount));
+            auto targetLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].target", lightsCount));
+            auto colorLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].color", lightsCount));
+
+            if (enabledLoc == -1 || typeLoc == -1 || positionLoc == -1 || targetLoc == -1 || colorLoc == -1 )
+            {
+                // FIXME
+                int a = 0;
+            }
+
+            // Send to shader light enabled state and type
+            raylib::SetShaderValue(shader, enabledLoc, &light.enabled, raylib::SHADER_UNIFORM_INT);
+            raylib::SetShaderValue(shader, typeLoc, &light.type, raylib::SHADER_UNIFORM_INT);
+
+            // Send to shader light position values
+            float position[3] = { light.position.x, light.position.y, light.position.z };
+            raylib::SetShaderValue(shader, positionLoc, position, raylib::SHADER_UNIFORM_VEC3);
+
+            // Send to shader light target position values
+            float target[3] = { light.target.x, light.target.y, light.target.z };
+            raylib::SetShaderValue(shader, targetLoc, target, raylib::SHADER_UNIFORM_VEC3);
+
+            // Send to shader light color values
+            float color[4] = { (float)light.color.r / (float)255, (float)light.color.g / (float)255, (float)light.color.b / (float)255, (float)light.color.a / (float)255 };
+            raylib::SetShaderValue(shader, colorLoc, color, raylib::SHADER_UNIFORM_VEC4);
+
+            lightsCount++;
+
+        }
     }
 
     void RendererModule::renderDebug()
@@ -124,7 +240,7 @@ namespace aiko
         static std::vector<raylib::Texture> textures = {
             GenTextureCustom()
         };
-        static int currentTextureIndex = textures.size() - 1;
+        static size_t currentTextureIndex = textures.size() - 1;
 
         static std::vector<raylib::Model> models = {
             raylib::LoadModelFromMesh(raylib::GenMeshPlane(2, 2, 5, 5)),

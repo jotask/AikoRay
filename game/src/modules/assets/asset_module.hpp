@@ -26,8 +26,8 @@ namespace aiko
         virtual void beginFrame() override;
         virtual void endFrame() override;
 
-        template<class T>
-        const UUID load(std::string path);
+        template<class T, typename... Args>
+        const UUID load(Args... args);
 
         template<class T>
         T* getAsset(const UUID& uuid);
@@ -40,10 +40,10 @@ namespace aiko
 
     };
 
-    template<class T>
-    inline const UUID AssetModule::load(std::string path)
+    template<class T, typename... Args>
+    inline const UUID AssetModule::load( Args... args )
     {
-        auto* ass = new T(path);
+        auto* ass = new T(args...);
         m_assets.emplace_back( ass );
         ass->load();
         return ass->getUUID();

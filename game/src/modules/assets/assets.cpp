@@ -61,18 +61,4 @@ namespace aiko
         raylib::PlaySound(m_sound);
     }
 
-    ShaderAsset::~ShaderAsset()
-    {
-
-    }
-
-    bool ShaderAsset::load()
-    {
-        m_shader = raylib::LoadShader( 
-            raylib::TextFormat("resources/shaders/glsl%i/base_lighting.vs", GLSL_VERSION ),
-            raylib::TextFormat("resources/shaders/glsl%i/lighting.fs",      GLSL_VERSION )
-        );
-        return false;
-    }
-
 }
