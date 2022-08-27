@@ -13,6 +13,7 @@ namespace aiko
     public:
 
         Model(raylib::Model m);
+        ~Model();
 
     private:
 

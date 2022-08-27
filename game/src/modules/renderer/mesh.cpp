@@ -10,10 +10,4 @@ namespace aiko
         m_model = raylib::LoadModelFromMesh(m_mesh);
     }
 
-    void Mesh::setShader(Shader shader)
-    {
-        // Assign out lighting shader to model
-        m_model.materials[0].shader = shader.m_shader;
-    }
-
 }

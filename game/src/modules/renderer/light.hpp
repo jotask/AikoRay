@@ -11,7 +11,7 @@ namespace aiko
         enum class LightType { DIRECTIONAL, POINT };
     public:
 
-        Light(const int nLight, Shader shader, LightType type, Vector3 position, Vector3 target, Color color, float attenuation);
+        Light(const int nLight, Shader* shader, LightType type, Vector3 position, Vector3 target, Color color, float attenuation);
 
     // TODO
     private:
@@ -28,7 +28,7 @@ namespace aiko
         int targetLoc = -1;
         int colorLoc = -1;
 
-        Shader shader;
+        Shader* shader;
         bool enabled;
         LightType type;
         Vector3 position;

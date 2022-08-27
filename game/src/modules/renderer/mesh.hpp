@@ -13,8 +13,6 @@ namespace aiko
     public:
         Mesh();
 
-        void setShader(Shader shader);
-
     private:
 
         friend class RendererModule;

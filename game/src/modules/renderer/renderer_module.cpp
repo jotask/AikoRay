@@ -5,7 +5,7 @@
 #include "utils/raylib_include.hpp"
 #include "core/raylib/raylight.hpp"
 
-#include "core/platform_detection.hpp"
+#include "core/platform_constants.hpp"
 #include "modules/assets/assets.hpp"
 
 #include "modules/renderer/light.hpp"
@@ -29,20 +29,21 @@ namespace aiko
     {
         raylib::SetTargetFPS(60);
 
-        m_shader.push_back({ raylib::TextFormat("resources/shaders/glsl%i/base_lighting.vs", GLSL_VERSION), raylib::TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION) });
+        m_shader.emplace_back(raylib::TextFormat("resources/shaders/glsl%i/base_lighting.vs", GLSL_VERSION), raylib::TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
+
         for (auto& shader : m_shader)
         {
             shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW] = shader.GetLocation("viewPos");
+            shader.m_shader.locs[raylib::SHADER_LOC_MATRIX_MODEL] = shader.GetLocation("matModel");
+
             shader.SetValue("ambient", { 0.1f, 0.1f, 0.1f, 1.0f }, Shader::ShaderUniformType::SHADER_UNIFORM_VEC4);
         }
 
-        static std::vector<raylib::Model> models = {
-            raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)),
-            raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)),
-        };
+        // FIXME Replace to model pointers, so the reallocation dont' move things around
+        m_models.reserve(2);
 
-        m_models.push_back({ raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)) });
-        m_models.push_back({ raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)) });
+        m_models.emplace_back(raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)));
+        m_models.emplace_back( raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)));
 
         for (auto& shader : m_shader)
         {
@@ -52,16 +53,20 @@ namespace aiko
             }
         }
 
-        m_lights.push_back({ 0,m_shader[0], Light::LightType::POINT, { -2, 1, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
-        m_lights.push_back({ 1,m_shader[0], Light::LightType::POINT, {  2, 1,  2 }, {0.0f}, raylib::RED, 0.5f });
-        m_lights.push_back({ 2,m_shader[0], Light::LightType::POINT, { -2, 1,  2 }, {0.0f}, raylib::GREEN, 0.5f });
-        m_lights.push_back({ 3,m_shader[0], Light::LightType::POINT, {  2, 1, -2 }, {0.0f}, raylib::BLUE, 0.5f });
+        m_lights.push_back({ 0, &m_shader[0], Light::LightType::POINT, { -2, 0.5f, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
+        m_lights.push_back({ 1, &m_shader[0], Light::LightType::POINT, {  2, 0.5f,  2 }, {0.0f}, raylib::RED, 0.5f });
+        m_lights.push_back({ 2, &m_shader[0], Light::LightType::POINT, { -2, 0.5f,  2 }, {0.0f}, raylib::GREEN, 0.5f });
+        m_lights.push_back({ 3, &m_shader[0], Light::LightType::POINT, {  2, 0.5f, -2 }, {0.0f}, raylib::BLUE, 0.5f });
 
     }
 
     void RendererModule::update()
     {
-
+        // Check key inputs to enable/disable lights
+        if (raylib::IsKeyPressed(raylib::KEY_Y)) { m_lights[0].enabled = !m_lights[0].enabled; }
+        if (raylib::IsKeyPressed(raylib::KEY_R)) { m_lights[1].enabled = !m_lights[1].enabled; }
+        if (raylib::IsKeyPressed(raylib::KEY_G)) { m_lights[2].enabled = !m_lights[2].enabled; }
+        if (raylib::IsKeyPressed(raylib::KEY_B)) { m_lights[3].enabled = !m_lights[3].enabled; }
     }
 
     void RendererModule::render()
@@ -92,15 +97,18 @@ namespace aiko
             old = camera;
             raylib::SetCameraMode(cam, raylib::CAMERA_ORBITAL);  // Set a orbital camera mode
         }
-        else
-        {
-            raylib::UpdateCamera(&cam);
-        }
-
+        
+        raylib::UpdateCamera(&cam);
+        
+        float cameraPos[3] = { cam.position.x, cam.position.y, cam.position.z };
         for (auto& shader : m_shader)
         {
-            float cameraPos[3] = { cam.position.x, cam.position.y, cam.position.z };
-            raylib::SetShaderValue(shader.m_shader, shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW], cameraPos, raylib::SHADER_UNIFORM_VEC3);
+            shader.SetValueV(shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW], cameraPos, Shader::ShaderUniformType::SHADER_UNIFORM_VEC3);
+        }
+
+        for (auto& light : m_lights)
+        {
+            light.update();
         }
 
         raylib::BeginMode3D(cam);
@@ -118,11 +126,6 @@ namespace aiko
 
     void RendererModule::renderShader()
     {
-
-        for (auto light : m_lights)
-        {
-            light.update();
-        }
 
         for (auto& model : m_models)
         {

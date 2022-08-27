@@ -13,7 +13,7 @@ namespace aiko
 
     void DisplayModule::init()
     {
-        raylib::SetConfigFlags(raylib::FLAG_WINDOW_RESIZABLE | raylib::FLAG_VSYNC_HINT);
+        raylib::SetConfigFlags(raylib::FLAG_WINDOW_RESIZABLE | raylib::FLAG_VSYNC_HINT | raylib::FLAG_MSAA_4X_HINT);
         raylib::InitWindow(ScreenWidth, ScreenHeight, "raylib game template");
     }
 

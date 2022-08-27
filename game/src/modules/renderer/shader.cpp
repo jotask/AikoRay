@@ -9,6 +9,11 @@ namespace aiko
         m_shader = raylib::LoadShader(vertex.c_str(), fragment.c_str());
     }
 
+    Shader::~Shader()
+    {
+        raylib::UnloadShader(m_shader);
+    }
+
     int Shader::GetLocation( const std::string locationName )
     {
         return raylib::GetShaderLocation(m_shader, locationName.c_str() );
