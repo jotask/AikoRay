@@ -36,10 +36,10 @@ namespace aiko
             shader.SetValue("ambient", { 0.1f, 0.1f, 0.1f, 1.0f }, Shader::ShaderUniformType::SHADER_UNIFORM_VEC4);
         }
 
-        m_lights.push_back({ Light::LightType::POINT, { -2, 1, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
-        m_lights.push_back({ Light::LightType::POINT, {  2, 1,  2 }, {0.0f}, raylib::RED, 0.5f });
-        m_lights.push_back({ Light::LightType::POINT, { -2, 1,  2 }, {0.0f}, raylib::GREEN, 0.5f });
-        m_lights.push_back({ Light::LightType::POINT, {  2, 1, -2 }, {0.0f}, raylib::BLUE, 0.5f });
+        m_lights.push_back({ 0,m_shader[0], Light::LightType::POINT, { -2, 1, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
+        m_lights.push_back({ 1,m_shader[0], Light::LightType::POINT, {  2, 1,  2 }, {0.0f}, raylib::RED, 0.5f });
+        m_lights.push_back({ 2,m_shader[0], Light::LightType::POINT, { -2, 1,  2 }, {0.0f}, raylib::GREEN, 0.5f });
+        m_lights.push_back({ 3,m_shader[0], Light::LightType::POINT, {  2, 1, -2 }, {0.0f}, raylib::BLUE, 0.5f });
 
     }
 
@@ -89,7 +89,7 @@ namespace aiko
 
         raylib::BeginMode3D(cam);
 
-        renderDebug();
+        // renderDebug();
 
         renderShader();
 
@@ -108,6 +108,11 @@ namespace aiko
             raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)),
         };
 
+        for (auto light : m_lights)
+        {
+            light.update();
+        }
+
         for (auto& shader : m_shader)
         {
 
@@ -116,7 +121,6 @@ namespace aiko
                 caca.materials[0].shader = shader.m_shader;
             }
 
-            sendLightToShader(shader);
         }
 
         for (auto& caca : models)
@@ -137,49 +141,6 @@ namespace aiko
         }
 
 
-    }
-
-    void RendererModule::sendLightToShader(Shader shaderTmp)
-    {
-        auto lightsCount = 0;
-
-        auto& shader = shaderTmp.m_shader;
-
-        for( auto& light : m_lights )
-        {
-
-            // NOTE: Lighting shader naming must be the provided ones
-            auto enabledLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].enabled", lightsCount));
-            auto typeLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].type", lightsCount));
-            auto positionLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].position", lightsCount));
-            auto targetLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].target", lightsCount));
-            auto colorLoc = raylib::GetShaderLocation(shader, raylib::TextFormat("lights[%i].color", lightsCount));
-
-            if (enabledLoc == -1 || typeLoc == -1 || positionLoc == -1 || targetLoc == -1 || colorLoc == -1 )
-            {
-                // FIXME
-                int a = 0;
-            }
-
-            // Send to shader light enabled state and type
-            raylib::SetShaderValue(shader, enabledLoc, &light.enabled, raylib::SHADER_UNIFORM_INT);
-            raylib::SetShaderValue(shader, typeLoc, &light.type, raylib::SHADER_UNIFORM_INT);
-
-            // Send to shader light position values
-            float position[3] = { light.position.x, light.position.y, light.position.z };
-            raylib::SetShaderValue(shader, positionLoc, position, raylib::SHADER_UNIFORM_VEC3);
-
-            // Send to shader light target position values
-            float target[3] = { light.target.x, light.target.y, light.target.z };
-            raylib::SetShaderValue(shader, targetLoc, target, raylib::SHADER_UNIFORM_VEC3);
-
-            // Send to shader light color values
-            float color[4] = { (float)light.color.r / (float)255, (float)light.color.g / (float)255, (float)light.color.b / (float)255, (float)light.color.a / (float)255 };
-            raylib::SetShaderValue(shader, colorLoc, color, raylib::SHADER_UNIFORM_VEC4);
-
-            lightsCount++;
-
-        }
     }
 
     void RendererModule::renderDebug()

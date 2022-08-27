@@ -20,4 +20,9 @@ namespace aiko
         raylib::SetShaderValue(m_shader, location, &values, static_cast<raylib::ShaderUniformDataType>(type));
     }
 
+    void Shader::SetValueV(const int locIndex, const void* values, ShaderUniformType type)
+    {
+        raylib::SetShaderValue(m_shader, locIndex, &values, static_cast<raylib::ShaderUniformDataType>(type));
+    }
+
 }

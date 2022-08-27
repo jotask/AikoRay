@@ -43,8 +43,6 @@ namespace aiko
 
         AssetModule* m_assetModule;
 
-        void sendLightToShader(Shader shader);
-
         void renderDebug();
         void renderShader();
 
