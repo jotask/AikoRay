@@ -4,6 +4,7 @@
 #include "core/math.hpp"
 #include "modules/renderer/light.hpp"
 #include "modules/renderer/shader.hpp"
+#include "modules/renderer/model.hpp"
 
 #include <vector>
 
@@ -40,6 +41,9 @@ namespace aiko
 
         using Shaders = std::vector<Shader>;
         Shaders     m_shader;
+
+        using Models = std::vector<Model>;
+        Models     m_models;
 
         AssetModule* m_assetModule;
 

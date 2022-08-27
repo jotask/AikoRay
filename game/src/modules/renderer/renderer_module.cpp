@@ -36,6 +36,22 @@ namespace aiko
             shader.SetValue("ambient", { 0.1f, 0.1f, 0.1f, 1.0f }, Shader::ShaderUniformType::SHADER_UNIFORM_VEC4);
         }
 
+        static std::vector<raylib::Model> models = {
+            raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)),
+            raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)),
+        };
+
+        m_models.push_back({ raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)) });
+        m_models.push_back({ raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)) });
+
+        for (auto& shader : m_shader)
+        {
+            for (auto& model : m_models)
+            {
+                model.model.materials[0].shader = shader.m_shader;
+            }
+        }
+
         m_lights.push_back({ 0,m_shader[0], Light::LightType::POINT, { -2, 1, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
         m_lights.push_back({ 1,m_shader[0], Light::LightType::POINT, {  2, 1,  2 }, {0.0f}, raylib::RED, 0.5f });
         m_lights.push_back({ 2,m_shader[0], Light::LightType::POINT, { -2, 1,  2 }, {0.0f}, raylib::GREEN, 0.5f });
@@ -103,29 +119,14 @@ namespace aiko
     void RendererModule::renderShader()
     {
 
-        static std::vector<raylib::Model> models = {
-            raylib::LoadModelFromMesh(raylib::GenMeshPlane(10.0f, 10.0f, 3, 3)),
-            raylib::LoadModelFromMesh(raylib::GenMeshCube(2.0f, 4.0f, 2.0f)),
-        };
-
         for (auto light : m_lights)
         {
             light.update();
         }
 
-        for (auto& shader : m_shader)
+        for (auto& model : m_models)
         {
-
-            for (auto& caca : models)
-            {
-                caca.materials[0].shader = shader.m_shader;
-            }
-
-        }
-
-        for (auto& caca : models)
-        {
-            raylib::DrawModel(caca, {0.0f}, 1.0f, raylib::WHITE);
+            model.render();
         }
 
         for (auto& light : m_lights)

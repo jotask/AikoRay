@@ -21,6 +21,8 @@ namespace aiko
     {
         raylib::InitAudioDevice();
 
+        /*
+
         assetModule->load<MusicAsset>("resources/ambient.ogg");
         assetModule->load<SoundAsset>("resources/coin.wav");
 
@@ -34,11 +36,13 @@ namespace aiko
 
         sound->playOneShoot();
 
+        */
+
     }
 
     void AudioModule::update()
     {
-        music->update();
+        // music->update();
     }
 
     void AudioModule::render()
