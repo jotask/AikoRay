@@ -27,8 +27,17 @@ namespace aiko
         Shader(std::string vertex, std::string fragment);
         ~Shader();
         int GetLocation ( const std::string locationName );
-        void SetValue(const std::string locationName, Vector4 values, ShaderUniformType type);
-        void SetValueV(const int locIndex, const void* values, ShaderUniformType type);
+
+
+        void SetValue(const std::string locationName, int value);
+        void SetValue(const int locIndex, int value);
+
+        void SetValue(const std::string locationName, Vector3 values);
+        void SetValue(const int locIndex, Vector3 values);
+
+        void SetValue(const std::string locationName, Vector4 values);
+        void SetValue(const int locIndex, Vector4 values);
+
     private:
 
         friend class RendererModule;
