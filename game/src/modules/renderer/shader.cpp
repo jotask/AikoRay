@@ -19,7 +19,6 @@ namespace aiko
         return raylib::GetShaderLocation(m_shader, locationName.c_str() );
     }
 
-
     void Shader::SetValue(const std::string locationName, int value)
     {
         const auto location = GetLocation(locationName);
