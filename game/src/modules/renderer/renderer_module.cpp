@@ -127,6 +127,8 @@ namespace aiko
     void RendererModule::renderShader()
     {
 
+        raylib::DrawGrid(10, 1.0);
+
         for (auto& model : m_models)
         {
             model.render();
