@@ -53,10 +53,10 @@ namespace aiko
             }
         }
 
-        m_lights.push_back({ 0, &m_shader[0], Light::LightType::POINT, { -2, 0.5f, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
-        m_lights.push_back({ 1, &m_shader[0], Light::LightType::POINT, {  2, 0.5f,  2 }, {0.0f}, raylib::RED, 0.5f });
-        m_lights.push_back({ 2, &m_shader[0], Light::LightType::POINT, { -2, 0.5f,  2 }, {0.0f}, raylib::GREEN, 0.5f });
-        m_lights.push_back({ 3, &m_shader[0], Light::LightType::POINT, {  2, 0.5f, -2 }, {0.0f}, raylib::BLUE, 0.5f });
+        m_lights.push_back({ 0, &m_shader[0], Light::LightType::POINT, { -2, 1.0f, -2 }, {0.0f}, raylib::YELLOW, 0.5f });
+        m_lights.push_back({ 1, &m_shader[0], Light::LightType::POINT, {  2, 1.0f,  2 }, {0.0f}, raylib::RED, 0.5f });
+        m_lights.push_back({ 2, &m_shader[0], Light::LightType::POINT, { -2, 1.0f,  2 }, {0.0f}, raylib::GREEN, 0.5f });
+        m_lights.push_back({ 3, &m_shader[0], Light::LightType::POINT, {  2, 1.0f, -2 }, {0.0f}, raylib::BLUE, 0.5f });
 
     }
 
