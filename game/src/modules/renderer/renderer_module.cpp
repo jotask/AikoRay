@@ -36,7 +36,7 @@ namespace aiko
             shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW] = shader.GetLocation("viewPos");
             shader.m_shader.locs[raylib::SHADER_LOC_MATRIX_MODEL] = shader.GetLocation("matModel");
 
-            shader.SetValue("ambient", { 0.1f, 0.1f, 0.1f, 1.0f }, Shader::ShaderUniformType::SHADER_UNIFORM_VEC4);
+            shader.SetValue("ambient", { 0.1f, 0.1f, 0.1f, 1.0f } );
         }
 
         // FIXME Replace to model pointers, so the reallocation dont' move things around
@@ -100,10 +100,11 @@ namespace aiko
         
         raylib::UpdateCamera(&cam);
         
-        float cameraPos[3] = { cam.position.x, cam.position.y, cam.position.z };
         for (auto& shader : m_shader)
         {
-            shader.SetValueV(shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW], cameraPos, Shader::ShaderUniformType::SHADER_UNIFORM_VEC3);
+            const int locIndex = shader.m_shader.locs[raylib::SHADER_LOC_VECTOR_VIEW];
+            Vector3 campPos = { cam.position.x, cam.position.y, cam.position.z };
+            shader.SetValue(locIndex, campPos);
         }
 
         for (auto& light : m_lights)
