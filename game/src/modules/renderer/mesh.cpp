@@ -10,4 +10,9 @@ namespace aiko
         m_model = raylib::LoadModelFromMesh(m_mesh);
     }
 
+    Mesh::~Mesh()
+    {
+
+    }
+
 }

@@ -12,6 +12,7 @@ namespace aiko
     {
     public:
         Mesh();
+        ~Mesh();
 
     private:
 
