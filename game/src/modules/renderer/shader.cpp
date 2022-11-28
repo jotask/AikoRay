@@ -19,6 +19,17 @@ namespace aiko
         return raylib::GetShaderLocation(m_shader, locationName.c_str() );
     }
 
+    void Shader::SetValue(const std::string locationName, float value)
+    {
+        const auto location = GetLocation(locationName);
+        SetValue(location, value);
+    }
+
+    void Shader::SetValue(const int location, float value)
+    {
+        raylib::SetShaderValue(m_shader, location, &value, static_cast<raylib::ShaderUniformDataType>(ShaderUniformType::SHADER_UNIFORM_FLOAT));
+    }
+
     void Shader::SetValue(const std::string locationName, int value)
     {
         const auto location = GetLocation(locationName);

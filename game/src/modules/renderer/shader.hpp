@@ -28,6 +28,8 @@ namespace aiko
         ~Shader();
         int GetLocation ( const std::string locationName );
 
+        void SetValue(const std::string locationName, float value);
+        void SetValue(const int locIndex, float value);
 
         void SetValue(const std::string locationName, int value);
         void SetValue(const int locIndex, int value);
